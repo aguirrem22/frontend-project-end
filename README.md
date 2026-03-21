@@ -1,16 +1,26 @@
-# React + Vite
+# Frontend Tienda Online (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend de la tienda que consume el backend API-only en `http://localhost:3000/api`.
 
-Currently, two official plugins are available:
+## Instalación
+```bash
+npm install
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Desarrollo
+```bash
+npm run dev
+```
 
-## React Compiler
+Por defecto se levanta en:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- http://localhost:5173
 
-## Expanding the ESLint configuration
+## Requisitos
+- Tener el backend corriendo en `http://localhost:3000`
+- Tener CORS habilitado en backend para `http://localhost:5173`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Funcionalidades
+- Listado y detalle de productos
+- Login admin por sesión
+- Crear, editar y eliminar productos desde panel admin

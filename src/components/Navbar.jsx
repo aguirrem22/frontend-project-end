@@ -13,7 +13,9 @@ export default function Navbar() {
   return (
     <header className="store-nav-wrap">
       <nav className="store-nav">
-        <Link to="/products" className="store-brand">Tienda Online</Link>
+        <div><img src="../public/logo.png" alt="Deportes de Contacto" className="logo-banner" />
+        </div>
+        
         <div className="store-nav-actions">
           <Link to="/products" className="store-link-pill">Productos</Link>
           {isAdmin ? (

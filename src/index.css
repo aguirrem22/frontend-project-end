@@ -1,11 +1,11 @@
 :root {
   --store-bg: #f4efe8;
   --store-bg-soft: #fff9f1;
-  --store-ink: #2f261d;
-  --store-muted: #6e6357;
-  --store-accent: #ca683d;
+  --store-ink: #ffffff;
+  --store-muted: #f9f8f7;
+  --store-accent: #f2f2f2;
   --store-secondary: #d9ddbf;
-  --store-border: rgba(64, 56, 45, 0.12);
+  --store-border: rgba(104, 75, 75, 0.12);
   --store-display: "Cormorant Garamond", Georgia, serif;
   --store-sans: "Manrope", "Segoe UI", sans-serif;
 

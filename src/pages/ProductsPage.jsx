@@ -35,9 +35,9 @@ export default function ProductsPage() {
         <div className="store-hero-copy">
           <p className="store-eyebrow">Colección 2026</p>
           <h1>Tu estilo, tu identidad</h1>
-          <p className="store-muted">Descubre prendas y accesorios para cada momento.</p>
+          <p className="store-muted">Descubre prendas y accesorios para cada entreno y combate oss</p>
           <div className="store-hero-chip-row">
-            {CATEGORIES.filter((item) => item !== 'Todos').map((item) => (
+            {CATEGORIES.filter((item) => item !== 'Todoss').map((item) => (
               <button key={item} className="store-chip" onClick={() => setCategory(item)}>
                 {item}
               </button>
@@ -51,7 +51,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      <section className="store-filter-panel">
+      {/* <section className="store-filter-panel">
         <h2>Catálogo {category !== 'Todos' ? `· ${category}` : ''}</h2>
         <label className="store-filter-label">
           Categoría
@@ -61,7 +61,7 @@ export default function ProductsPage() {
             ))}
           </select>
         </label>
-      </section>
+      </section> */}
 
       {loading && <p className="store-feedback">Cargando productos...</p>}
       {error && <p className="store-feedback store-feedback-error">{error}</p>}
