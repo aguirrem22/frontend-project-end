@@ -1,3 +1,39 @@
+.app-video-layout {
+  position: relative;
+  min-height: 100vh;
+}
+
+.app-video-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #120f0c;
+}
+
+.app-video-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.42) saturate(0.9) contrast(1.05);
+}
+
+.app-video-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(14, 10, 8, 0.62) 0%, rgba(14, 10, 8, 0.38) 32%, rgba(14, 10, 8, 0.72) 100%),
+    radial-gradient(circle at top right, rgba(202, 104, 61, 0.2), transparent 30%),
+    radial-gradient(circle at top left, rgba(116, 126, 76, 0.12), transparent 24%);
+}
+
+.app-content-layer {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
 .store-app-shell {
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
