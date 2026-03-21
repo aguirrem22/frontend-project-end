@@ -13,7 +13,7 @@ export default function Navbar() {
   return (
     <header className="store-nav-wrap">
       <nav className="store-nav">
-        <div><img src="../public/logo.png" alt="Deportes de Contacto" className="logo-banner" />
+        <div><img src="/logo.png" alt="Deportes de Contacto" className="logo-banner" />
         </div>
         
         <div className="store-nav-actions">
