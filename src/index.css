@@ -1,0 +1,62 @@
+:root {
+  --store-bg: #f4efe8;
+  --store-bg-soft: #fff9f1;
+  --store-ink: #2f261d;
+  --store-muted: #6e6357;
+  --store-accent: #ca683d;
+  --store-secondary: #d9ddbf;
+  --store-border: rgba(64, 56, 45, 0.12);
+  --store-display: "Cormorant Garamond", Georgia, serif;
+  --store-sans: "Manrope", "Segoe UI", sans-serif;
+
+  font-family: var(--store-sans);
+  line-height: 1.5;
+  color: var(--store-ink);
+  background:
+    radial-gradient(circle at top left, rgba(202, 104, 61, 0.18), transparent 30%),
+    radial-gradient(circle at top right, rgba(116, 126, 76, 0.18), transparent 26%),
+    linear-gradient(180deg, #fbf6ef 0%, var(--store-bg) 45%, #efe4d7 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100vh;
+}
+
+body {
+  min-width: 320px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--store-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--store-ink);
+}
+
+p {
+  margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+img {
+  max-width: 100%;
+}
