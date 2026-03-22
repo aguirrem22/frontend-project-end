@@ -1,6 +1,6 @@
 const envApiBase = import.meta.env.VITE_API_BASE_URL?.trim();
 const fallbackApiBase = import.meta.env.PROD
-  ? 'https://tienda-dp-contact.onrender.com/api'
+  ? '/api'
   : 'http://localhost:3000/api';
 
 const API_BASE = (envApiBase || fallbackApiBase).replace(/\/$/, '');
