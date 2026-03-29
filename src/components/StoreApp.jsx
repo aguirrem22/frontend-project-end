@@ -7,11 +7,17 @@ import ProductDetailPage from '../pages/ProductDetailPage';
 import LoginPage from '../pages/LoginPage';
 import AdminDashboard from '../pages/AdminDashboard';
 import ProductFormPage from '../pages/ProductFormPage';
+import CartPage from '../pages/CartPage';
 
 const AuthContext = createContext(null);
+const CartContext = createContext(null);
 
 export function useAuth() {
   return useContext(AuthContext);
+}
+
+export function useCart() {
+  return useContext(CartContext);
 }
 
 function ProtectedRoute({ children }) {
@@ -24,6 +30,7 @@ export default function StoreApp() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [username, setUsername] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     fetch(apiUrl('/auth/me'), { credentials: 'include' })
@@ -88,6 +95,51 @@ export default function StoreApp() {
 
   const authValue = useMemo(() => ({ isAdmin, username, login, logout }), [isAdmin, username]);
 
+  function addToCart(product, quantity) {
+    setCart((prevCart) => {
+      const existing = prevCart.find(item => item._id === product._id);
+      if (existing) {
+        return prevCart.map(item =>
+          item._id === product._id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
+      } else {
+        return [...prevCart, { ...product, quantity }];
+      }
+    });
+  }
+
+  function removeFromCart(productId) {
+    setCart((prevCart) => prevCart.filter(item => item._id !== productId));
+  }
+
+  function updateCartQuantity(productId, quantity) {
+    if (quantity <= 0) {
+      removeFromCart(productId);
+    } else {
+      setCart((prevCart) =>
+        prevCart.map(item =>
+          item._id === productId ? { ...item, quantity } : item
+        )
+      );
+    }
+  }
+
+  function clearCart() {
+    setCart([]);
+  }
+
+  const cartValue = useMemo(() => ({
+    cart,
+    addToCart,
+    removeFromCart,
+    updateCartQuantity,
+    clearCart,
+    totalItems: cart.reduce((sum, item) => sum + item.quantity, 0),
+    totalPrice: cart.reduce((sum, item) => sum + item.precio * item.quantity, 0)
+  }), [cart]);
+
   if (authLoading) {
     return (
       <div className="store-app-shell">
@@ -98,29 +150,32 @@ export default function StoreApp() {
 
   return (
     <AuthContext.Provider value={authValue}>
-      <BrowserRouter>
-        <Navbar />
-        <main className="store-app-shell">
-          <Routes>
-            <Route path="/" element={<Navigate to="/products" replace />} />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route path="/products/:id" element={<ProductDetailPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route
-              path="/admin"
-              element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>}
-            />
-            <Route
-              path="/admin/new"
-              element={<ProtectedRoute><ProductFormPage /></ProtectedRoute>}
-            />
-            <Route
-              path="/admin/edit/:id"
-              element={<ProtectedRoute><ProductFormPage /></ProtectedRoute>}
-            />
-          </Routes>
-        </main>
-      </BrowserRouter>
+      <CartContext.Provider value={cartValue}>
+        <BrowserRouter>
+          <Navbar />
+          <main className="store-app-shell">
+            <Routes>
+              <Route path="/" element={<Navigate to="/products" replace />} />
+              <Route path="/products" element={<ProductsPage />} />
+              <Route path="/products/:id" element={<ProductDetailPage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route
+                path="/admin"
+                element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>}
+              />
+              <Route
+                path="/admin/new"
+                element={<ProtectedRoute><ProductFormPage /></ProtectedRoute>}
+              />
+              <Route
+                path="/admin/edit/:id"
+                element={<ProtectedRoute><ProductFormPage /></ProtectedRoute>}
+              />
+            </Routes>
+          </main>
+        </BrowserRouter>
+      </CartContext.Provider>
     </AuthContext.Provider>
   );
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useAuth } from '../components/StoreApp';
+import { useAuth, useCart } from '../components/StoreApp';
 import { apiUrl } from '../lib/api';
 
 const FALLBACK = 'https://placehold.co/720x820?text=Sin+Imagen';
@@ -9,6 +9,7 @@ export default function ProductDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { isAdmin } = useAuth();
+  const { addToCart } = useCart();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -54,27 +55,10 @@ export default function ProductDetailPage() {
     }
   }
 
-  function addToCart() {
-    fetch(apiUrl(`/buy/${id}`), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ quantity }),
-    })
-      .then(async (response) => {
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.error || 'Error al comprar');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        alert(`Compra realizada: ${quantity} unidad(es) de ${product.nombre}. Stock restante: ${data.newStock}`);
-        // Actualizar el stock localmente
-        setProduct({ ...product, stock: data.newStock });
-        setQuantity(1); // Reset quantity
-      })
-      .catch((err) => alert(err.message));
+  function addToCartLocal() {
+    addToCart(product, quantity);
+    alert(`Agregado ${quantity} unidad(es) de ${product.nombre} al carrito.`);
+    setQuantity(1); // Reset quantity
   }
 
   if (loading) return <p className="store-feedback">Cargando producto...</p>;
@@ -100,7 +84,7 @@ export default function ProductDetailPage() {
               <span>{quantity}</span>
               <button onClick={incrementQuantity} disabled={quantity >= (product.stock || 0)}>+</button>
             </div>
-            <button className="store-button" onClick={addToCart} disabled={product.stock === 0}>Agregar al carrito</button>
+            <button className="store-button" onClick={addToCartLocal} disabled={product.stock === 0}>Agregar al carrito</button>
           </div>
         )}
         <div className="store-actions-row">

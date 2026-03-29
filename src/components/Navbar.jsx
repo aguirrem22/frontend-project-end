@@ -1,8 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from './StoreApp';
+import { useAuth, useCart } from './StoreApp';
 
 export default function Navbar() {
   const { isAdmin, username, logout } = useAuth();
+  const { totalItems } = useCart();
   const navigate = useNavigate();
 
   async function onLogout() {
@@ -18,6 +19,7 @@ export default function Navbar() {
         
         <div className="store-nav-actions">
           <Link to="/products" className="store-link-pill">Productos</Link>
+          <Link to="/cart" className="store-link-pill">Carrito {totalItems > 0 && `(${totalItems})`}</Link>
           {isAdmin ? (
             <>
               <span className="store-user-label">{username}</span>
