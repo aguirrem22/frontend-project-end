@@ -1,38 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../components/StoreApp';
 import { apiUrl } from '../lib/api';
 
 const FALLBACK = 'https://placehold.co/420x520?text=Sin+Imagen';
 
 export default function CartPage() {
+  const navigate = useNavigate();
   const { cart, removeFromCart, updateCartQuantity, clearCart, totalItems, totalPrice } = useCart();
 
   async function checkout() {
     if (cart.length === 0) return;
-
-    // Procesar cada item del carrito
-    for (const item of cart) {
-      try {
-        const response = await fetch(apiUrl(`/buy/${item._id}`), {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify({ quantity: item.quantity }),
-        });
-
-        if (!response.ok) {
-          const error = await response.json();
-          alert(`Error con ${item.nombre}: ${error.error}`);
-          return;
-        }
-      } catch (err) {
-        alert(`Error de red con ${item.nombre}`);
-        return;
-      }
-    }
-
-    alert('Compra completada exitosamente!');
-    clearCart();
+    navigate('/checkout');
   }
 
   if (cart.length === 0) {

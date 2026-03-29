@@ -8,6 +8,7 @@ import LoginPage from '../pages/LoginPage';
 import AdminDashboard from '../pages/AdminDashboard';
 import ProductFormPage from '../pages/ProductFormPage';
 import CartPage from '../pages/CartPage';
+import CheckoutPage from '../pages/CheckoutPage';
 
 const AuthContext = createContext(null);
 const CartContext = createContext(null);
@@ -159,6 +160,7 @@ export default function StoreApp() {
               <Route path="/products" element={<ProductsPage />} />
               <Route path="/products/:id" element={<ProductDetailPage />} />
               <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route
                 path="/admin"
