@@ -8,6 +8,7 @@ export default function AdminDashboard() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [visitCount, setVisitCount] = useState(0);
 
   const loadProducts = useCallback(() => {
     setLoading(true);
@@ -25,6 +26,15 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     loadProducts();
+    // Cargar contador de visitas
+    fetch(apiUrl('/visits'), { credentials: 'include' })
+      .then(async (response) => {
+        if (response.ok) {
+          const data = await response.json();
+          setVisitCount(data.count || 0);
+        }
+      })
+      .catch(() => {});
   }, [loadProducts]);
 
   async function onDelete(id) {
@@ -40,10 +50,34 @@ export default function AdminDashboard() {
     }
   }
 
+  async function onDuplicate(product) {
+    const duplicatedProduct = {
+      ...product,
+      nombre: `Copia de ${product.nombre}`,
+    };
+    delete duplicatedProduct._id;
+    delete duplicatedProduct.createdAt;
+    delete duplicatedProduct.updatedAt;
+
+    const response = await fetch(apiUrl('/create'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(duplicatedProduct),
+    });
+
+    if (response.ok) {
+      loadProducts();
+    } else {
+      alert('Error al duplicar el producto');
+    }
+  }
+
   return (
     <>
       <section className="store-filter-panel">
         <h2>Panel de administración</h2>
+        <p>Visitas totales: {visitCount}</p>
         <Link to="/admin/new"><button className="store-button">Nuevo producto</button></Link>
       </section>
 
@@ -65,9 +99,11 @@ export default function AdminDashboard() {
                 <h3>{product.nombre}</h3>
                 <p className="store-product-meta">{product.categoria} · Talla {product.talla}</p>
                 <p className="store-price">{Number(product.precio).toFixed(2)} €</p>
+                <p className="store-product-meta">Stock: {product.stock || 0}</p>
                 <div className="store-actions-row">
                   <Link to={`/products/${product._id}`}><button className="store-button store-button-secondary">Ver</button></Link>
                   <Link to={`/admin/edit/${product._id}`}><button className="store-button">Editar</button></Link>
+                  <button className="store-button store-button-info" onClick={() => onDuplicate(product)}>Duplicar</button>
                   <button className="store-button store-button-danger" onClick={() => onDelete(product._id)}>Borrar</button>
                 </div>
               </div>

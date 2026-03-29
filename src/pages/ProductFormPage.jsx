@@ -12,6 +12,7 @@ const EMPTY_FORM = {
   categoria: 'Camisetas',
   talla: 'M',
   precio: '',
+  stock: '',
 };
 
 export default function ProductFormPage() {
@@ -39,6 +40,7 @@ export default function ProductFormPage() {
           categoria: product.categoria,
           talla: product.talla,
           precio: String(product.precio),
+          stock: String(product.stock || 0),
         });
       })
       .catch((err) => setError(err.message || 'Error al cargar')); 
@@ -92,6 +94,10 @@ export default function ProductFormPage() {
           <label className="store-filter-label">
             Precio
             <input name="precio" type="number" step="0.01" min="0" value={form.precio} onChange={onChange} required />
+          </label>
+          <label className="store-filter-label">
+            Stock
+            <input name="stock" type="number" min="0" value={form.stock} onChange={onChange} required />
           </label>
         </div>
 

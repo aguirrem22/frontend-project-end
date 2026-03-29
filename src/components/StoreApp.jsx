@@ -42,6 +42,14 @@ export default function StoreApp() {
       .finally(() => setAuthLoading(false));
   }, []);
 
+  useEffect(() => {
+    // Incrementar contador de visitas al cargar la app
+    fetch(apiUrl('/visits'), {
+      method: 'POST',
+      credentials: 'include',
+    }).catch(() => {}); // Ignorar errores
+  }, []);
+
   async function login(usernameValue, passwordValue) {
     try {
       const response = await fetch(apiUrl('/auth/login'), {
