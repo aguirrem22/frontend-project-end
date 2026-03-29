@@ -55,8 +55,26 @@ export default function ProductDetailPage() {
   }
 
   function addToCart() {
-    alert(`Agregado ${quantity} unidad(es) de ${product.nombre} al carrito.`);
-    // Aquí se podría implementar lógica real de carrito
+    fetch(apiUrl(`/buy/${id}`), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ quantity }),
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || 'Error al comprar');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        alert(`Compra realizada: ${quantity} unidad(es) de ${product.nombre}. Stock restante: ${data.newStock}`);
+        // Actualizar el stock localmente
+        setProduct({ ...product, stock: data.newStock });
+        setQuantity(1); // Reset quantity
+      })
+      .catch((err) => alert(err.message));
   }
 
   if (loading) return <p className="store-feedback">Cargando producto...</p>;
