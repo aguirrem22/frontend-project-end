@@ -9,6 +9,7 @@ import AdminDashboard from '../pages/AdminDashboard';
 import ProductFormPage from '../pages/ProductFormPage';
 import CartPage from '../pages/CartPage';
 import CheckoutPage from '../pages/CheckoutPage';
+import OrdersPage from '../pages/OrdersPage';
 
 const AuthContext = createContext(null);
 const CartContext = createContext(null);
@@ -31,7 +32,14 @@ export default function StoreApp() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [username, setUsername] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    try {
+      const saved = localStorage.getItem('thebridge-cart');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
 
   useEffect(() => {
     fetch(apiUrl('/auth/me'), { credentials: 'include' })
@@ -131,6 +139,14 @@ export default function StoreApp() {
     setCart([]);
   }
 
+  useEffect(() => {
+    try {
+      localStorage.setItem('thebridge-cart', JSON.stringify(cart));
+    } catch {
+      // localStorage puede fallar en entornos restringidos
+    }
+  }, [cart]);
+
   const cartValue = useMemo(() => ({
     cart,
     addToCart,
@@ -173,6 +189,10 @@ export default function StoreApp() {
               <Route
                 path="/admin/edit/:id"
                 element={<ProtectedRoute><ProductFormPage /></ProtectedRoute>}
+              />
+              <Route
+                path="/admin/orders"
+                element={<ProtectedRoute><OrdersPage /></ProtectedRoute>}
               />
             </Routes>
           </main>

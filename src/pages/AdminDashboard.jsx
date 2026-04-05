@@ -14,7 +14,7 @@ export default function AdminDashboard() {
     setLoading(true);
     setError('');
 
-    fetch(apiUrl('/'), { credentials: 'include' })
+    fetch(apiUrl('/products'), { credentials: 'include' })
       .then(async (response) => {
         if (!response.ok) throw new Error('No se pudieron cargar los productos');
         return response.json();
@@ -78,7 +78,10 @@ export default function AdminDashboard() {
       <section className="store-filter-panel">
         <h2>Panel de administración</h2>
         <p>Visitas totales: {visitCount}</p>
-        <Link to="/admin/new"><button className="store-button">Nuevo producto</button></Link>
+        <div className="store-actions-row">
+          <Link to="/admin/new"><button className="store-button">Nuevo producto</button></Link>
+          <Link to="/admin/orders"><button className="store-button store-button-secondary">Órdenes</button></Link>
+        </div>
       </section>
 
       {loading && <p className="store-feedback">Cargando...</p>}

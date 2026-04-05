@@ -37,7 +37,7 @@ export default function ProductsPage() {
           <h1>Tu estilo, tu identidad</h1>
           <p className="store-muted">Descubre prendas y accesorios para cada entreno y combate oss</p>
           <div className="store-hero-chip-row">
-            {CATEGORIES.filter((item) => item !== 'Todoss').map((item) => (
+            {CATEGORIES.map((item) => (
               <button key={item} className="store-chip" onClick={() => setCategory(item)}>
                 {item}
               </button>

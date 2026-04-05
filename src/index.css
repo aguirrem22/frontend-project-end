@@ -6,8 +6,6 @@
   --store-accent: #f2f2f2;
   --store-secondary: #d9ddbf;
   --store-border: rgba(104, 75, 75, 0.12);
-  --store-display: "Cormorant Garamond", Georgia, serif;
-  --store-sans: "Manrope", "Segoe UI", sans-serif;
 
   font-family: var(--store-sans);
   line-height: 1.5;

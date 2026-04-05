@@ -37,7 +37,7 @@
 .store-app-shell {
   width: min(1180px, calc(100% - 32px));
   display: flex;
-  flex-direction: column;
+  flex-direction: column; ;
   margin: 0 auto;
   padding: 24px 0 48px;
 }
@@ -259,11 +259,15 @@
 .store-form-panel {
   width: 100%;
   max-width: 640px;
+  margin: 0 auto;
 }
 
 .store-form {
   display: grid;
   gap: 14px;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 .store-form textarea {
@@ -551,7 +555,6 @@
   width: 32px;
   height: 32px;
   border: 1px solid var(--store-border);
-  background: var(--store-bg);
   color: var(--store-text);
   cursor: pointer;
   display: flex;
@@ -621,7 +624,7 @@
   width: 32px;
   height: 32px;
   border: 1px solid var(--store-border);
-  background: var(--store-bg);
+  background: none;
   color: var(--store-text);
   cursor: pointer;
   display: flex;

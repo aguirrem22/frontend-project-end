@@ -23,6 +23,15 @@ Por defecto se levanta en:
 ## Variables de entorno
 En local puedes usar el backend en `http://localhost:3000/api`.
 
+El carrito se guarda en `localStorage`, por lo que los productos seleccionados se mantienen al recargar el navegador.
+
+## Funcionalidades nuevas
+- Panel admin con contador de visitas
+- Duplicar productos desde administración
+- Página de órdenes para revisar compras realizadas
+- Stock real por producto y cantidad seleccionable
+- Checkout simulado con datos de cliente
+
 Para despliegue en Netlify define:
 
 ```bash
@@ -42,5 +51,6 @@ El backend debe estar desplegado por separado y permitir el dominio de Netlify e
 
 ## Funcionalidades
 - Listado y detalle de productos
+- Comprar productos "simulacion"
 - Login admin por sesión
 - Crear, editar y eliminar productos desde panel admin
