@@ -673,7 +673,6 @@
 }
 
 .checkout-summary {
-  background: var(--store-bg);
   border: 1px solid var(--store-border);
   border-radius: 8px;
   padding: 16px;
